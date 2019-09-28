@@ -13,3 +13,93 @@ Organizations:
         Type: Signature
         Rule: "OR('OrdererMSP.admin')"
     MSPDir: crypto-config/ordererOrganizations/reliance-network.com/msp
+
+  - &infrastructure
+    Name: INFRASTRUCTUREMSP
+    ID: infrastructureMSP
+    MSPDir: crypto-config/peerOrganizations/infrastructure.reliance-network.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('infrastructureMSP.admin', 'infrastructureMSP.peer', 'infrastructureMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('infrastructureMSP.admin', 'infrastructureMSP.peer', 'infrastructureMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('infrastructureMSP.admin', 'infrastructureMSP.peer', 'infrastructureMSP.client')"
+    AnchorPeers:
+      - Host: peer0.infrastructure.reliance-network.com
+        Port: 7051
+
+  - &power
+    Name: powerMSP
+    ID: POWERMSP
+    MSPDir: crypto-config/peerOrganizations/power.reliance-network.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('powerMSP.admin', 'powerMSP.peer', 'powerMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('powerMSP.admin', 'powerMSP.peer', 'powerMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('powerMSP.admin', 'powerMSP.peer', 'powerMSP.client')"
+    AnchorPeers:
+      - Host: peer0.power.reliance-network.com
+        Port: 9051
+
+  - &communication
+    Name: COMMUNICATIONMSP
+    ID: communicationMSP
+    MSPDir: crypto-config/peerOrganizations/communication.reliance-network.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('communicationMSP.admin', 'communicationMSP.peer', 'communicationMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('communicationMSP.admin', 'communicationMSP.peer', 'communicationMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('communicationMSP.admin', 'communicationMSP.peer', 'communicationMSP.client')"
+    AnchorPeers:
+      - Host: peer0.communication.reliance-network.com
+        Port: 11051
+  
+  - &entertainment
+    Name: ENTERTAINMENTMSP
+    ID: entertainmentMSP
+    MSPDir: crypto-config/peerOrganizations/entertainment.reliance-network.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('entertainmentMSP.admin', 'entertainmentMSP.peer', 'entertainmentMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('entertainmentMSP.admin', 'entertainmentMSP.peer', 'entertainmentMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('entertainmentMSP.admin', 'entertainmentMSP.peer', 'entertainmentMSP.client')"
+    AnchorPeers:
+      - Host: peer0.entertainment.reliance-network.com
+        Port: 13051
+
+  - &capital
+    Name: CAPITALMSP
+    ID: capitalMSP
+    MSPDir: crypto-config/peerOrganizations/capital.reliance-network.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('capitalMSP.admin', 'capitalMSP.peer', 'capitalMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('capitalMSP.admin', 'capitalMSP.peer', 'capitalMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('capitalMSP.admin', 'capitalMSP.peer', 'capitalMSP.client')"
+    AnchorPeers:
+      - Host: peer0.capital.reliance-network.com
+        Port: 15051
