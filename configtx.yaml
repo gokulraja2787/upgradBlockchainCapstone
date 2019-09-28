@@ -103,3 +103,16 @@ Organizations:
     AnchorPeers:
       - Host: peer0.capital.reliance-network.com
         Port: 15051
+
+#Capabilities
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    # Channel capabilties 1.3 or above
+    V1_3: true
+  Orderer: &OrdererCapabilities
+    # Orderer capabilities 1.1 or above
+    V1_1: true
+  Application: &ApplicationCapabilities
+    # Application capabilities 1.3 or above
+    V1_3: true
