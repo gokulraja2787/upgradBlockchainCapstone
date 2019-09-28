@@ -49,7 +49,7 @@ coverage
 ### current project specific ignores ###
 # The docker-compose-cli.yaml should be generate. 
 docker-compose-cli.yaml
-# fabric-sample should not be pushed
-fabric-sample
+# fabric-samples should not be pushed
+fabric-samples
 channel-artifacts
 crypto-config
