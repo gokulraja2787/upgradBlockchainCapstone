@@ -51,3 +51,5 @@ coverage
 docker-compose-cli.yaml
 # fabric-sample should not be pushed
 fabric-sample
+channel-artifacts
+crypto-config
