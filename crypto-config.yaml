@@ -1,0 +1,5 @@
+OrdererOrgs:
+  - Name: RNOrderingService
+    Domain: reliance-network.com
+    Specs:
+      - Hostname: orderer

@@ -1,0 +1,15 @@
+Organizations:
+  - &OrdererOrg
+    Name: RNOrderingService
+    ID: OrdererMSP
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+    MSPDir: crypto-config/ordererOrganizations/reliance-network.com/msp
