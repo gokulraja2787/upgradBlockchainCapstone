@@ -47,5 +47,7 @@ coverage
 **/.next
 
 ### current project specific ignores ###
-# docker-compose-cli.yaml should be generate. 
+# The docker-compose-cli.yaml should be generate. 
 docker-compose-cli.yaml
+# fabric-sample should not be pushed
+fabric-sample
