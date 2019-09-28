@@ -61,7 +61,8 @@ function checkPrerequisite {
 
 # Function to set environment variables
 function setEnvironmentVariables() {
-    export RNET_WORKSPACE=$HOME/upgradComposerAssignment/property-registration-system
+    export RNET_WORKSPACE=$(dirname "$0")
+    echo "COMPOSE_PROJECT_NAME=reliance" > $RNET_WORKSPACE/.env
     export FABRIC_TOOLS=$RNET_WORKSPACE/fabric-samples/bin
     export CHANNEL_NAME=reliancenetworkchannel
     PATH=$PATH:$FABRIC_TOOLS
