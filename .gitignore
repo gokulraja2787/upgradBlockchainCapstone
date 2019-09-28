@@ -45,3 +45,7 @@ coverage
 
 # next.js build output
 **/.next
+
+### current project specific ignores ###
+# docker-compose-cli.yaml should be generate. 
+docker-compose-cli.yaml
