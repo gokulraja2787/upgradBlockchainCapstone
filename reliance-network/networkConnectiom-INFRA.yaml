@@ -1,0 +1,228 @@
+name: "reliance-network"
+
+x-type: "hlfv1"
+
+description: "Reliance Network"
+
+version: "1.0"
+
+client:
+  organization: infrastructure
+  connection:
+    timeout:
+      peer:
+        endorser: 300
+        eventHub: 300
+        eventReg: 300
+      orderer: 3001.0.*
+
+channels:
+  channelregorgs:
+    orderers:
+      - orderer.reliance-network.com
+    peers:
+      peer0.infrastructure.reliance-network.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.infrastructure.reliance-network.com:
+        endorsingPeer: false
+        chaincodeQuery: false
+        ledgerQuery: true
+        eventSource: false
+      peer0.power.reliance-network.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.power.reliance-network.com:
+        endorsingPeer: false
+        chaincodeQuery: false
+        ledgerQuery: true
+        eventSource: false
+      peer0.communication.reliance-network.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.communication.reliance-network.com:
+        endorsingPeer: false
+        chaincodeQuery: false
+        ledgerQuery: true
+        eventSource: false
+      peer0.entertainment.reliance-network.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.entertainment.reliance-network.com:
+        endorsingPeer: false
+        chaincodeQuery: false
+        ledgerQuery: true
+        eventSource: false
+      peer0.capital.reliance-network.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1.capital.reliance-network.com:
+        endorsingPeer: false
+        chaincodeQuery: false
+        ledgerQuery: true
+        eventSource: false
+
+organizations:
+  infrastructure:
+    mspid: infrastructureMSP
+    peers:
+      - peer0.infrastructure.reliance-network.com
+      - peer1.infrastructure.reliance-network.com
+    certificateAuthorities:
+      - ca.infrastructure.reliance-network.com
+  power:
+    mspid: powerMSP
+    peers:
+      - peer0.power.reliance-network.com
+      - peer1.power.reliance-network.com
+    certificateAuthorities:
+      - ca.power.reliance-network.com
+  communication:
+    mspid: communicationMSP
+    peers:
+      - peer0.communication.reliance-network.com
+      - peer1.communication.reliance-network.com
+    certificateAuthorities:
+      - ca.communication.reliance-network.com
+
+orderers:
+  orderer.reliance-network.com:
+    url: grpcs://localhost:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.reliance-network.com
+    tlsCACerts:
+      path: ./crypto-config/ordererOrganizations/reliance-network.com/orderers/orderer.reliance-network.com/msp/tlscacerts/tlsca.reliance-network.com-cert.pem
+
+peers:
+  peer0.infrastructure.reliance-network.com:
+    url: grpcs://localhost:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.infrastructure.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/infrastructure.reliance-network.com/peers/peer0.infrastructure.reliance-network.com/msp/tlscacerts/tlsca.infrastructure.reliance-network.com-cert.pem
+  peer1.infrastructure.reliance-network.com:
+    url: grpcs://localhost:8051
+    grpcOptions:
+      ssl-target-name-override: peer1.infrastructure.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/infrastructure.reliance-network.com/peers/peer1.infrastructure.reliance-network.com/msp/tlscacerts/tlsca.infrastructure.reliance-network.com-cert.pem
+  peer0.power.reliance-network.com:
+    url: grpcs://localhost:9051
+    grpcOptions:
+      ssl-target-name-override: peer0.power.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/power.reliance-network.com/peers/peer0.power.reliance-network.com/msp/tlscacerts/tlsca.power.reliance-network.com-cert.pem
+  peer1.power.reliance-network.com:
+    url: grpcs://localhost:10051
+    grpcOptions:
+      ssl-target-name-override: peer1.power.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/power.reliance-network.com/peers/peer1.power.reliance-network.com/msp/tlscacerts/tlsca.power.reliance-network.com-cert.pem
+  peer0.communication.reliance-network.com:
+    url: grpcs://localhost:11051
+    grpcOptions:
+      ssl-target-name-override: peer0.communication.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/communication.reliance-network.com/peers/peer0.communication.reliance-network.com/msp/tlscacerts/tlsca.communication.reliance-network.com-cert.pem
+  peer1.communication.reliance-network.com:
+    url: grpcs://localhost:12051
+    grpcOptions:
+      ssl-target-name-override: peer1.communication.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/communication.reliance-network.com/peers/peer1.communication.reliance-network.com/msp/tlscacerts/tlsca.communication.reliance-network.com-cert.pem
+  peer0.entertainment.reliance-network.com:
+    url: grpcs://localhost:13051
+    grpcOptions:
+      ssl-target-name-override: peer0.entertainment.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/entertainment.reliance-network.com/peers/peer0.entertainment.reliance-network.com/msp/tlscacerts/tlsca.entertainment.reliance-network.com-cert.pem
+  peer1.entertainment.reliance-network.com:
+    url: grpcs://localhost:14051
+    grpcOptions:
+      ssl-target-name-override: peer1.entertainment.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/entertainment.reliance-network.com/peers/peer1.entertainment.reliance-network.com/msp/tlscacerts/tlsca.entertainment.reliance-network.com-cert.pem
+  peer0.capital.reliance-network.com:
+    url: grpcs://localhost:15051
+    grpcOptions:
+      ssl-target-name-override: peer0.capital.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/capital.reliance-network.com/peers/peer0.capital.reliance-network.com/msp/tlscacerts/tlsca.capital.reliance-network.com-cert.pem
+  peer1.capital.reliance-network.com:
+    url: grpcs://localhost:16051
+    grpcOptions:
+      ssl-target-name-override: peer1.capital.reliance-network.com
+      request-timeout: 120001
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/capital.reliance-network.com/peers/peer1.capital.reliance-network.com/msp/tlscacerts/tlsca.capital.reliance-network.com-cert.pem
+
+certificateAuthorities:
+  ca.infrastructure.reliance-network.com:
+    url: http://localhost:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/infrastructure.reliance-network.com/ca/ca.infrastructure.reliance-network.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.infrastructure.reliance-network.com
+  ca.power.reliance-network.com:
+    url: http://localhost:9054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/power.reliance-network.com/ca/ca.power.reliance-network.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.power.reliance-network.com
+  ca.communication.reliance-network.com:
+    url: http://localhost:11054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/communication.reliance-network.com/ca/ca.communication.reliance-network.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.communication.reliance-network.com
+  ca.entertainment.reliance-network.com:
+    url: http://localhost:13054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/entertainment.reliance-network.com/ca/ca.entertainment.reliance-network.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.communication.reliance-network.com
+  ca.capital.reliance-network.com:
+    url: http://localhost:15054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/capital.reliance-network.com/ca/ca.capital.reliance-network.com-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca.capital.reliance-network.com

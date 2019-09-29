@@ -19,7 +19,7 @@ Hyperledger Fabric blockchain system for reliance-network.com
 ### Docker compose file Generation
 Docker compose file is docker-compose-cli.yaml will not committed. It is template. The template will be generated automatically by setupFabric.sh. This approach of generating docker-compose-cli.yaml is taken because, the certificate file names has to be replaced because ca is enabled.
 
-# How to run
+# How to setup fabric 
     "Usage: "
     "./setupFabric.sh [-h|-s] [-f] [-t] [-n START|STOP]"
     "-h print this usage"
@@ -29,3 +29,12 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
     "-g Generate cryptoconfig and channel transaction"
     "-n Network command. Accepts START or STOP"
     "-j Create channel and join all peers"
+
+# How to setup composer and run code
+    "Usage: "
+    "./checkPrerequisite.sh -h|a"
+    "-h print this usage"
+    "-c Create PeerAdmin card"
+    "-d [VERSION] Create and Deploy Business network"
+    "-i [Identity name] create admin identity"
+    "-n [VERSION] start network with given version"

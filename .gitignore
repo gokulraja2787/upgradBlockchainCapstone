@@ -53,3 +53,7 @@ docker-compose-cli.yaml
 fabric-samples
 channel-artifacts
 crypto-config
+
+##Certs
+*.pem
+**/*.pem
