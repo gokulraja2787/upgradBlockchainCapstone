@@ -181,8 +181,8 @@ function createChannelAndJoinPeers() {
     echo "Join peers Reliance infrastructure"
     sudo docker exec -it cli ./scripts/connectINFRAPeers.sh
 
-    # echo "Connect Square 4 Assest firm"
-    # sudo docker exec -it cli ./scripts/connectS4AFPeers.sh
+    echo "Join peers Reliance power"
+    sudo docker exec -it cli ./scripts/connectPOWERPeers.sh
 
     # echo "Liberty Asset Solutions"
     # sudo docker exec -it cli ./scripts/connectLASPeers.sh
