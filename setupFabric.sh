@@ -178,16 +178,16 @@ function createChannelAndJoinPeers() {
     sudo docker exec -it cli ./scripts/createchannel.sh
     sleep 10
 
-    echo "Connect Mirage Asset Solutions"
-    sudo docker exec -it cli ./scripts/connectMASPeers.sh
+    echo "Join peers Reliance infrastructure"
+    sudo docker exec -it cli ./scripts/connectINFRAPeers.sh
 
-    echo "Connect Square 4 Assest firm"
-    sudo docker exec -it cli ./scripts/connectS4AFPeers.sh
+    # echo "Connect Square 4 Assest firm"
+    # sudo docker exec -it cli ./scripts/connectS4AFPeers.sh
 
-    echo "Liberty Asset Solutions"
-    sudo docker exec -it cli ./scripts/connectLASPeers.sh
+    # echo "Liberty Asset Solutions"
+    # sudo docker exec -it cli ./scripts/connectLASPeers.sh
 
-    echo "Done!"
+    # echo "Done!"
 }
 
 #Check Prerequisite
