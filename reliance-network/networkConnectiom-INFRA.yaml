@@ -94,6 +94,21 @@ organizations:
       - peer1.communication.reliance-network.com
     certificateAuthorities:
       - ca.communication.reliance-network.com
+  entertainment:
+    mspid: entertainmentMSP
+    peers:
+      - peer0.entertainment.reliance-network.com
+      - peer1.entertainment.reliance-network.com
+    certificateAuthorities:
+      - ca.entertainment.reliance-network.com
+  capital:
+    mspid: capitalMSP
+    peers:
+      - peer0.capital.reliance-network.com
+      - peer1.capital.reliance-network.com
+    certificateAuthorities:
+      - ca.capital.reliance-network.com
+
 
 orderers:
   orderer.reliance-network.com:
