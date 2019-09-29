@@ -1,4 +1,9 @@
-#!/bin/sh
+#!/usr/bin/sh
+# Author: Gokul Rangarajan
+# Date: September 28, 2019
+# Script to create deploy BNA in reliance network
+# also creates identity and admin cards
+# For upgard capstone project
 
 : '
     Script to ease out composer tasks.
