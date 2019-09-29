@@ -186,8 +186,12 @@ function createChannelAndJoinPeers() {
 
     echo "Join peers Reliance communication"
     sudo docker exec -it cli ./scripts/connectCOMMPeers.sh
-    # echo "Liberty Asset Solutions"
-    # sudo docker exec -it cli ./scripts/connectLASPeers.sh
+
+    echo "Join peers Reliance Entertainment"
+    sudo docker exec -it cli ./scripts/connectENTPeers.sh
+
+    echo "Join peers Capital Entertainment"
+    sudo docker exec -it cli ./scripts/connectCAPPeers.sh
 
     # echo "Done!"
 }
