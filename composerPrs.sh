@@ -76,6 +76,7 @@ function createBNA() {
     if [ -d reliance-network/dist ]; then
         sudo rm reliance-network/dist/* -rf
     fi
+    mkdir -p reliance-network/dist
     cd reliance-network
     npm version $1
     cd - 
