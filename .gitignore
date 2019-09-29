@@ -57,3 +57,6 @@ crypto-config
 ##Certs
 *.pem
 **/*.pem
+
+dist/
+**/dist/
