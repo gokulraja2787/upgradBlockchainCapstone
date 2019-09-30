@@ -35,11 +35,14 @@ function usage() {
     echo "-d [VERSION] Create and Deploy Business network"
     echo "-i [Identity name] create admin identity"
     echo "-n [VERSION] start network with given version"
+    echo "-l list peer admin cards"
+    echo "-r [CARDNAME] remove peer admin cards"
 }
 
-CARD_NAME="PeerAdmin@reliance-network-infrastructure"
+CARD_NAME="PeerAdmin@reliance-network"
 
-function createMSPPeerAdmin() {
+# Set infra composer environment variables
+function setInfraComposerEnvVariables() {
     CONNECTION_PROFILE=./reliance-network/networkConnectiom-INFRA.yaml
     MAS_KEY_LOCATION=./crypto-config/peerOrganizations/infrastructure.reliance-network.com/users/Admin@infrastructure.reliance-network.com/msp/keystore/
     if [ ! -f $MAS_KEY_LOCATION/*_sk ]; then
@@ -49,6 +52,11 @@ function createMSPPeerAdmin() {
     PRIVATE_KEY=`ls $MAS_KEY_LOCATION*_sk`
     echo $PRIVATE_KEY
     CERT=./crypto-config/peerOrganizations/infrastructure.reliance-network.com/users/Admin@infrastructure.reliance-network.com/msp/signcerts/Admin@infrastructure.reliance-network.com-cert.pem
+}
+
+# Create MSP PeerAdmin card
+function createMSPPeerAdmin() {
+    setInfraComposerEnvVariables
 
     echo "Creating new card for PeerAdmin"    
     composer card create -p "$CONNECTION_PROFILE" -u PeerAdmin -c "$CERT" -k "$PRIVATE_KEY" -r PeerAdmin -r ChannelAdmin -f "${CARD_NAME}.card"
@@ -56,7 +64,8 @@ function createMSPPeerAdmin() {
     # Check if a card with the same name has previously been imported? If yes, remove it before importing a new one.
     if composer card list -c $CARD_NAME >/dev/null; then
         echo "Deleting existing card"
-        composer card delete -c $CARD_NAME
+        #composer card delete -c $CARD_NAME
+        deleteCard $CARD_NAME
     fi
 
     echo "Importing created card"
@@ -67,11 +76,24 @@ function createMSPPeerAdmin() {
 
 #function createS4AFPeerAdmin() {}
 
-#Creates composer peer admin card
+# Creates composer peer admin card
 function createPeerAdminCard() {
     createMSPPeerAdmin
+    listCards
+}
+
+# List peer admin cards
+function listCards() {
+    setInfraComposerEnvVariables
     echo "List of cards imported at the end: "
     composer card list
+}
+
+# Function to delete given card
+function deleteCard() {
+    setInfraComposerEnvVariables
+    echo "Deleting existing card"
+    composer card delete -c $1
 }
 
 #Function to create Business Network Archive file
@@ -98,7 +120,7 @@ function installBNA() {
 
 checkPrerequisite
 
-while getopts "h?cd:i:n:" o; do
+while getopts "h?cd:i:n:lr:" o; do
     case "$o" in
     h | /?)
         usage
@@ -120,6 +142,12 @@ while getopts "h?cd:i:n:" o; do
         VERSION=$OPTARG
         composer network start -c $CARD_NAME -n reliance-network -V $VERSION -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A gokul -C gokul/admin-pub.pem
         #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
+        exit 0;;
+    l)
+        listCards
+        exit 0;;
+    r)
+        deleteCard $OPTARG
         exit 0;;
     *)
         usage
