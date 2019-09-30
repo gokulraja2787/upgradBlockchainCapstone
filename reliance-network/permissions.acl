@@ -16,19 +16,107 @@
  * Reliance network access control list.
  */
 
+/**
+ * Rule 1: The exporters can see only their own contracts.
+ */
+rule ExportersCanOnlySeeThierContracts {
+  description: "The exporters can see only their own contracts."
+  participant(p): "com.reliance.network.Exporter"
+  operation: READ
+  resource(r): "com.reliance.network.Contract"
+  condition: (p.getIdentifier() === r.exporter.getIdentifier())
+  action: ALLOW
+}
 
+/**
+ * Rule 2: The exporters can see only their own shipment.
+ */
+rule ExportersCanOnlySeeThierShipment {
+  description: "The exporters can see only their own shipment."
+  participant(p): "com.reliance.network.Exporter"
+  operation: READ
+  resource(r): "com.reliance.network.Shipment"
+  condition: (p.getIdentifier() === r.contract.exporter.getIdentifier())
+  action: ALLOW
+}
+
+/**
+ * Rule 3: The importers can see only their own contracts.
+ */
+rule ImportersCanOnlySeeThierContracts {
+  description: "The importers can see only their own contracts."
+  participant(p): "com.reliance.network.Importer"
+  operation: READ
+  resource(r): "com.reliance.network.Contract"
+  condition: (p.getIdentifier() === r.importer.getIdentifier())
+  action: ALLOW
+}
+
+/**
+ * Rule 4: The importers can see only their own shipment.
+ */
+rule ImporterCanOnlySeeThierShipment {
+  description: "The importers can see only their own contracts."
+  participant(p): "com.reliance.network.Importer"
+  operation: READ
+  resource(r): "com.reliance.network.Shipment"
+  condition: (p.getIdentifier() === r.contract.importer.getIdentifier())
+  action: ALLOW
+}
+
+/**
+ * Rule 5: The shippers can see only their own contracts.
+ */
+rule ShippersCanOnlySeeThierContract {
+  description: "The shippers can see only their own contracts."
+  participant(p): "com.reliance.network.Shipper"
+  operation: READ
+  resource(r): "com.reliance.network.Contract"
+  condition: (p.getIdentifier() === r.shipper.getIdentifier())
+  action: ALLOW
+}
+
+/**
+ * Rule 6: The shippers can see only their own shipment.
+ */
+rule ShippersCanOnlySeeThierShippment {
+  description: "The shippers can see only their own shipment."
+  participant(p): "com.reliance.network.Shipper"
+  operation: READ
+  resource(r): "com.reliance.network.Shipment"
+  condition: (p.getIdentifier() === r.contract.shipper.getIdentifier())
+  action: ALLOW
+}
+
+/**
+ * Rule 7: The participants can view the system
+ */
+rule PariticipantsCanViewSystem {
+  description: "The participants can view the system."
+  participant: "com.reliance.network.**"
+  operation: READ
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+/**
+ * Rule 8: The network admin user has access to all the resources
+ */
 rule NetworkAdminUser {
-    description: "Grant business network administrators full access to user resources"
+    description: "The network admin user has access to all the resources"
     participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
     resource: "**"
     action: ALLOW
 }
 
+/**
+ * Rule 8: The network admin system has access to all the resources.
+ */
 rule NetworkAdminSystem {
-    description: "Grant business network administrators full access to system resources"
+    description: "The network admin system has access to all the resources."
     participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
-    resource: "org.hyperledger.composer.system.**"
+    resource: "**"
     action: ALLOW
 }
