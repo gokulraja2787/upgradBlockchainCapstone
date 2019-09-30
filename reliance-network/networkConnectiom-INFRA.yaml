@@ -17,7 +17,7 @@ client:
       orderer: 3001.0.*
 
 channels:
-  channelregorgs:
+  reliancenetworkchannel:
     orderers:
       - orderer.reliance-network.com
     peers:

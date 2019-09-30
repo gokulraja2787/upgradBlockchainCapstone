@@ -112,6 +112,7 @@ function createBNA() {
 
 #Function to install BNA
 function installBNA() {
+    setInfraComposerEnvVariables
     VERSION=$1
     echo "Installing business network archive file of version: $VERSION"
     composer network install --card $CARD_NAME --archiveFile reliance-network/dist/reliance-network@${VERSION}.bna
@@ -139,8 +140,9 @@ while getopts "h?cd:i:n:lr:" o; do
         composer identity request -c $CARD_NAME -u admin -s adminpw -d $OPTARG
         exit 0;;
     n)
+        setInfraComposerEnvVariables
         VERSION=$OPTARG
-        composer network start -c $CARD_NAME -n reliance-network -V $VERSION -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A gokul -C gokul/admin-pub.pem
+        composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A gokul -C gokul/admin-pub.pem
         #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
         exit 0;;
     l)
