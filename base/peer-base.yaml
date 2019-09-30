@@ -5,7 +5,7 @@ services:
     image: hyperledger/fabric-peer:latest #x86_64-1.0.0-rc1
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}-network
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_byfn
       #- CORE_LOGGING_LEVEL=INFO #This is deprecated and replaced with FABRIC_LOGGING_SPEC
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_PEER_TLS_ENABLED=true
