@@ -96,7 +96,7 @@ function deleteCard() {
     composer card delete -c $1
 }
 
-#Function to create Business Network Archive file
+# Function to create Business Network Archive file
 function createBNA() {
     VERSION=$1
     echo "Creating business network archive version: $VERSION"
@@ -110,13 +110,18 @@ function createBNA() {
     composer archive create -t dir -n ./reliance-network -a reliance-network/dist/reliance-network@${VERSION}.bna
 }
 
-#Function to install BNA
+# Function to install BNA
 function installBNA() {
     setInfraComposerEnvVariables
     VERSION=$1
     echo "Installing business network archive file of version: $VERSION"
     composer network install --card $CARD_NAME --archiveFile reliance-network/dist/reliance-network@${VERSION}.bna
     sleep 20
+}
+
+# Function to create identity
+function createIdentity() {
+    composer identity request -c $CARD_NAME -u admin -s adminpw -d $1
 }
 
 checkPrerequisite
@@ -141,7 +146,7 @@ while getopts "h?cd:i:n:lr:k:" o; do
         installBNA $VERSION
         exit 0;;
     i) 
-        composer identity request -c $CARD_NAME -u admin -s adminpw -d $OPTARG
+        createIdentity $OPTARG
         exit 0;;
     n)
         VERSION=$OPTARG
@@ -165,5 +170,16 @@ while getopts "h?cd:i:n:lr:k:" o; do
         echo "STARTING Network $VERSION with $IDENTITY"
         composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A $IDENTITY -C $IDENTITY/admin-pub.pem
         #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
+
+        composer card create -p "$CONNECTION_PROFILE" -u $IDENTITY -n reliance-network -c $IDENTITY/admin-pub.pem -k $IDENTITY/admin-priv.pem
+
+        if composer card list -c $IDENTITY@reliance-network >/dev/null; then
+            deleteCard $IDENTITY@reliance-network
+        fi
+
+        composer card import -f $IDENTITY@reliance-network.card
+
+        # Ping the network using this card just created
+        composer network ping -c $IDENTITY@reliance-network
     fi
 done
