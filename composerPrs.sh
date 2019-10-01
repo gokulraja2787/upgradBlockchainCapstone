@@ -34,7 +34,7 @@ function usage() {
     echo "-c Create PeerAdmin card"
     echo "-d [VERSION] Create and Deploy Business network"
     echo "-i [Identity name] create admin identity"
-    echo "-n [VERSION] start network with given version"
+    echo "-n [VERSION] start network with given version with -k [Identity name] identity name to use"
     echo "-l list peer admin cards"
     echo "-r [CARDNAME] remove peer admin cards"
 }
@@ -121,7 +121,11 @@ function installBNA() {
 
 checkPrerequisite
 
-while getopts "h?cd:i:n:lr:" o; do
+DO_NETWORK_START=0
+VERSION=""
+IDENTITY=""
+
+while getopts "h?cd:i:n:lr:k:" o; do
     case "$o" in
     h | /?)
         usage
@@ -140,11 +144,12 @@ while getopts "h?cd:i:n:lr:" o; do
         composer identity request -c $CARD_NAME -u admin -s adminpw -d $OPTARG
         exit 0;;
     n)
-        setInfraComposerEnvVariables
         VERSION=$OPTARG
-        composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A gokul -C gokul/admin-pub.pem
-        #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
-        exit 0;;
+        ;;
+    k)
+        IDENTITY=$OPTARG
+        DO_NETWORK_START=1
+        ;;
     l)
         listCards
         exit 0;;
@@ -155,4 +160,10 @@ while getopts "h?cd:i:n:lr:" o; do
         usage
         exit 1;;
     esac
+    if [[ "$DO_NETWORK_START" == 1 ]]; then
+        setInfraComposerEnvVariables
+        echo "STARTING Network $VERSION with $IDENTITY"
+        composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A $IDENTITY -C $IDENTITY/admin-pub.pem
+        #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
+    fi
 done
