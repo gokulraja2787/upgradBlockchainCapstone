@@ -29,12 +29,13 @@ function checkPrerequisite {
 # Prints usage
 function usage() {
     echo "Usage: "
-    echo "./checkPrerequisite.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k]"
+    echo "./checkPrerequisite.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k] [-u -k]"
     echo "-h print this usage"
     echo "-c Create PeerAdmin card"
     echo "-d [VERSION] Create and Deploy Business network"
     echo "-i [Identity name] create admin identity"
     echo "-n [VERSION] start network with given version with -k [Identity name] identity name to use"
+    echo "-u [VERSION] upgrade network with given version with -k [Identity name] identity name to use"
     echo "-l list peer admin cards"
     echo "-r [CARDNAME] remove peer admin cards"
 }
@@ -127,10 +128,11 @@ function createIdentity() {
 checkPrerequisite
 
 DO_NETWORK_START=0
+DO_NETWORK_UPGRADE=0
 VERSION=""
 IDENTITY=""
 
-while getopts "h?cd:i:n:lr:k:" o; do
+while getopts "h?cd:i:n:lr:k:u:" o; do
     case "$o" in
     h | /?)
         usage
@@ -150,10 +152,14 @@ while getopts "h?cd:i:n:lr:k:" o; do
         exit 0;;
     n)
         VERSION=$OPTARG
+        DO_NETWORK_START=1
         ;;
     k)
         IDENTITY=$OPTARG
-        DO_NETWORK_START=1
+        ;;
+    u)
+        VERSION=$OPTARG
+        DO_NETWORK_UPGRADE=1
         ;;
     l)
         listCards
@@ -178,6 +184,14 @@ while getopts "h?cd:i:n:lr:k:" o; do
         fi
 
         composer card import -f $IDENTITY@reliance-network.card
+
+        # Ping the network using this card just created
+        composer network ping -c $IDENTITY@reliance-network
+    fi
+    if [[ "$DO_NETWORK_UPGRADE" == 1 ]]; then
+        setInfraComposerEnvVariables
+        echo "UPGRADING Network $VERSION with $IDENTITY"
+        composer network upgrade -c $CARD_NAME -n reliance-network -V $VERSION 
 
         # Ping the network using this card just created
         composer network ping -c $IDENTITY@reliance-network
