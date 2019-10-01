@@ -21,7 +21,7 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
 
 # How to setup fabric 
     "Usage: "
-    "./setupFabric.sh [-h|-s] [-f] [-t] [-n START|STOP]"
+    "./setupFabric.sh [-h] [-s] [-f] [-t] [-n START|STOP]"
     "-h print this usage"
     "-s Cleanup docker container and workspace"
     "-f (Re)create fabric binaries and test sample network. Doesn't do anything else."
@@ -32,7 +32,7 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
 
 # How to setup composer and run code
     "Usage: "
-    "./checkPrerequisite.sh -h|a"
+    "./checkPrerequisite.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k]"
     "-h print this usage"
     "-c Create PeerAdmin card"
     "-d [VERSION] Create and Deploy Business network"

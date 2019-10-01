@@ -29,7 +29,7 @@ function checkPrerequisite {
 # Prints usage
 function usage() {
     echo "Usage: "
-    echo "./checkPrerequisite.sh -h|a"
+    echo "./checkPrerequisite.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k]"
     echo "-h print this usage"
     echo "-c Create PeerAdmin card"
     echo "-d [VERSION] Create and Deploy Business network"
