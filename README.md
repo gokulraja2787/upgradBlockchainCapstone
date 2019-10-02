@@ -102,13 +102,21 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 2019-10-02T09:58:15.572Z
 
-## To represent relationship on the input fields
+## To represent relationship on the input fields for Asset, Participants creation
 
 - exporter: resource:com.reliance.network.Exporter#[id],
 - importer: resource:com.reliance.network.Importer#[id],
 - shipper:  resource:com.reliance.network.Shipper#[id],
 - contract: resource:com.reliance.network.Contract#[id],
 - shipment: resource:com.reliance.network.Shipment#[id]
+
+## To represent relationship on the input fields for transaction
+
+- exporter: com.reliance.network.Exporter#[id],
+- importer: com.reliance.network.Importer#[id],
+- shipper:  com.reliance.network.Shipper#[id],
+- contract: com.reliance.network.Contract#[id],
+- shipment: com.reliance.network.Shipment#[id]
 
 ## To represent arrays
 - []
