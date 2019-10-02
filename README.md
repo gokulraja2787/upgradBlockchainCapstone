@@ -89,3 +89,17 @@ Before running the tests make sure you are serving the app via `npm start`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+# Quick cheat
+
+## Sample datetime format
+
+2019-10-02T09:58:15.572Z
+
+## To represent relationship on the input fields
+
+- exporter: resource:com.reliance.network.Exporter#[id],
+- importer: resource:com.reliance.network.Importer#[id],
+- shipper:  resource:com.reliance.network.Shipper#[id],
+- contract: resource:com.reliance.network.Contract#[id],
+- shipment: resource:com.reliance.network.Shipment#[id]
