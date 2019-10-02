@@ -53,7 +53,7 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
 - ./composerPrs.sh -i [identityName] ==> This will create new identity with public and private key
 - ./composerPrs.sh -n [version] -k [identityName] ==> This will initiate chaincode on reliance-network with given identity.
 - composer-playground - if you want you use playgroung --or -- My faviroute approach
-- composer-rest-server
+- composer-rest-server -c [identityName]@reliance-network -n never -u true -d rnet-log -w true
 - cd rnet-ui
     - npm start   
 

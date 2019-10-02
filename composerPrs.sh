@@ -171,29 +171,29 @@ while getopts "h?cd:i:n:lr:k:u:" o; do
         usage
         exit 1;;
     esac
-    if [[ "$DO_NETWORK_START" == 1 ]]; then
-        setInfraComposerEnvVariables
-        echo "STARTING Network $VERSION with $IDENTITY"
-        composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A $IDENTITY -C $IDENTITY/admin-pub.pem
-        #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
-
-        composer card create -p "$CONNECTION_PROFILE" -u $IDENTITY -n reliance-network -c $IDENTITY/admin-pub.pem -k $IDENTITY/admin-priv.pem
-
-        if composer card list -c $IDENTITY@reliance-network >/dev/null; then
-            deleteCard $IDENTITY@reliance-network
-        fi
-
-        composer card import -f $IDENTITY@reliance-network.card
-
-        # Ping the network using this card just created
-        composer network ping -c $IDENTITY@reliance-network
-    fi
-    if [[ "$DO_NETWORK_UPGRADE" == 1 ]]; then
-        setInfraComposerEnvVariables
-        echo "UPGRADING Network $VERSION with $IDENTITY"
-        composer network upgrade -c $CARD_NAME -n reliance-network -V $VERSION 
-
-        # Ping the network using this card just created
-        composer network ping -c $IDENTITY@reliance-network
-    fi
 done
+if [[ "$DO_NETWORK_START" == 1 ]]; then
+    setInfraComposerEnvVariables
+    echo "STARTING Network $VERSION with $IDENTITY"
+    composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -o endorsementPolicyFile=./reliance-network/endorsement-policy.json -A $IDENTITY -C $IDENTITY/admin-pub.pem
+    #composer network start -c $CARD_NAME -n reliance-network -V $VERSION -l DEBUG -A admin -S adminpwd -f reliance-network.card
+
+    composer card create -p "$CONNECTION_PROFILE" -u $IDENTITY -n reliance-network -c $IDENTITY/admin-pub.pem -k $IDENTITY/admin-priv.pem
+
+    if composer card list -c $IDENTITY@reliance-network >/dev/null; then
+        deleteCard $IDENTITY@reliance-network
+    fi
+
+    composer card import -f $IDENTITY@reliance-network.card
+
+    # Ping the network using this card just created
+    composer network ping -c $IDENTITY@reliance-network
+fi
+if [[ "$DO_NETWORK_UPGRADE" == 1 ]]; then
+    setInfraComposerEnvVariables
+    echo "UPGRADING Network $VERSION with $IDENTITY"
+    composer network upgrade -c $CARD_NAME -n reliance-network -V $VERSION 
+
+    # Ping the network using this card just created
+    composer network ping -c $IDENTITY@reliance-network
+fi

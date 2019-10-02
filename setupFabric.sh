@@ -72,7 +72,7 @@ function setEnvironmentVariables() {
 function cleanUpAnyRunningDockerContainer() {
     sudo docker system prune -af
     sudo docker volume prune -f
-    sudo rm -rf ./channel-artifacts ./crypto-config ./docker-compose-cli.yaml
+    sudo rm -rf ./channel-artifacts ./crypto-config ./docker-compose-cli.yaml ./*.card
 }
 
 # (Re)create fabric bin by cloning fabric-sample and test it
