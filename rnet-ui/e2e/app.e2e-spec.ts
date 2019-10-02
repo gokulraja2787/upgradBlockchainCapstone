@@ -31,13 +31,13 @@ describe('Starting tests for rnet-ui', function() {
     })
   });
 
-  it('network-name should be reliance-network@0.0.1-SNAP',() => {
+  it('network-name should be reliance-network@0.0.2-SNAP3',() => {
     element(by.css('.network-name')).getWebElement()
     .then((webElement) => {
       return webElement.getText();
     })
     .then((txt) => {
-      expect(txt).toBe('reliance-network@0.0.1-SNAP.bna');
+      expect(txt).toBe('reliance-network@0.0.2-SNAP3.bna');
     });
   });
 

@@ -67,13 +67,16 @@ import {AssetType,ShipmentStatus,CompassDirection} from './com.reliance.network.
       message: string;
       shipment: Shipment;
    }
-   export class TemperatureReading extends Transaction {
+   export abstract class ShipmentTransaction extends Transaction{
+      shipment: Shipment;
+   }
+   export class TemperatureReading extends ShipmentTransaction {
       celcius: number;
       latitude: string;
       longitude: string;
       readingTime: string;
    }
-   export class AccelerationReading extends Transaction {
+   export class AccelerationReading extends ShipmentTransaction {
       accelerationX: number;
       accelerationY: number;
       accelerationZ: number;
@@ -81,7 +84,7 @@ import {AssetType,ShipmentStatus,CompassDirection} from './com.reliance.network.
       longitude: string;
       readingTime: string;
    }
-   export class GPSReading extends Transaction {
+   export class GPSReading extends ShipmentTransaction {
       latitude: string;
       longitude: string;
       latitudeDirection: CompassDirection;
@@ -89,7 +92,6 @@ import {AssetType,ShipmentStatus,CompassDirection} from './com.reliance.network.
       readingTime: string;
       readingDate: string;
    }
-   export class ShipmentReceived extends Transaction {
-      shipment: Shipment;
+   export class ShipmentReceived extends ShipmentTransaction {
    }
 // }

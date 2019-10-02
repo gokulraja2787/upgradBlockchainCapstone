@@ -38,6 +38,7 @@ export class AccelerationReadingComponent implements OnInit {
   latitude = new FormControl('', Validators.required);
   longitude = new FormControl('', Validators.required);
   readingTime = new FormControl('', Validators.required);
+  shipment = new FormControl('', Validators.required);
   transactionId = new FormControl('', Validators.required);
   timestamp = new FormControl('', Validators.required);
 
@@ -50,6 +51,7 @@ export class AccelerationReadingComponent implements OnInit {
       latitude: this.latitude,
       longitude: this.longitude,
       readingTime: this.readingTime,
+      shipment: this.shipment,
       transactionId: this.transactionId,
       timestamp: this.timestamp
     });
@@ -115,6 +117,7 @@ export class AccelerationReadingComponent implements OnInit {
       'latitude': this.latitude.value,
       'longitude': this.longitude.value,
       'readingTime': this.readingTime.value,
+      'shipment': this.shipment.value,
       'transactionId': this.transactionId.value,
       'timestamp': this.timestamp.value
     };
@@ -126,6 +129,7 @@ export class AccelerationReadingComponent implements OnInit {
       'latitude': null,
       'longitude': null,
       'readingTime': null,
+      'shipment': null,
       'transactionId': null,
       'timestamp': null
     });
@@ -141,6 +145,7 @@ export class AccelerationReadingComponent implements OnInit {
         'latitude': null,
         'longitude': null,
         'readingTime': null,
+        'shipment': null,
         'transactionId': null,
         'timestamp': null
       });
@@ -163,6 +168,7 @@ export class AccelerationReadingComponent implements OnInit {
       'latitude': this.latitude.value,
       'longitude': this.longitude.value,
       'readingTime': this.readingTime.value,
+      'shipment': this.shipment.value,
       'timestamp': this.timestamp.value
     };
 
@@ -217,6 +223,7 @@ export class AccelerationReadingComponent implements OnInit {
         'latitude': null,
         'longitude': null,
         'readingTime': null,
+        'shipment': null,
         'transactionId': null,
         'timestamp': null
       };
@@ -257,6 +264,12 @@ export class AccelerationReadingComponent implements OnInit {
         formObject.readingTime = null;
       }
 
+      if (result.shipment) {
+        formObject.shipment = result.shipment;
+      } else {
+        formObject.shipment = null;
+      }
+
       if (result.transactionId) {
         formObject.transactionId = result.transactionId;
       } else {
@@ -291,6 +304,7 @@ export class AccelerationReadingComponent implements OnInit {
       'latitude': null,
       'longitude': null,
       'readingTime': null,
+      'shipment': null,
       'transactionId': null,
       'timestamp': null
     });
