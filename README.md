@@ -1,8 +1,12 @@
 # upgradBlockchainCapstone
-repository to hold my capstone project of Upgrad course on blockchain
+Repository to hold my capstone project of Upgrad course on blockchain
 
 # Reliance network
 Hyperledger Fabric blockchain system for reliance-network.com
+
+## Assumptions
+- Acceleration Threshold:
+    - 10.4 > tx.accelerationX && 10.2 > tx.accelerationY && 10 > tx.accelerationZ
 
 ## Fabric Setup
 - 5 Organizations:
@@ -61,6 +65,8 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
     - ./composerPrs.sh -d [version] ==> This will create new relinance-network@[version].bna and install them in reliance-network
     - ./composerPrs.sh -u [version] -k [identityName] ==> This will initiate updated chaincode on reliance-network with given identity.
 
+<hr />
+
 # rnet-ui
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
@@ -103,3 +109,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - shipper:  resource:com.reliance.network.Shipper#[id],
 - contract: resource:com.reliance.network.Contract#[id],
 - shipment: resource:com.reliance.network.Shipment#[id]
+
+## To represent arrays
+- []
