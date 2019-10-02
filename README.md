@@ -41,3 +41,22 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
     "-u [VERSION] upgrade network with given version with -k [Identity name] identity name to use"
     "-l list peer admin cards"
     "-r [CARDNAME] remove peer admin cards"
+
+# How to do continuous development and deploy.
+- Clone the source code
+- Network name is reliance-network
+- ./setupFabric.sh -g ==> This will generate crypo and channel artefacts
+- ./setupFabric.sh -n START ==> This will start the fabric network
+- ./setupFabric.sh -j ==> This will create channel and join all peers
+- ./composerPrs.sh -c ==> This will create a PeerAdmin card (Only for one organisation [Reliance Infrastructure])
+- ./composerPrs.sh -d [version] ==> This will create new relinance-network@[version].bna and install them in reliance-network
+- ./composerPrs.sh -i [identityName] ==> This will create new identity with public and private key
+- ./composerPrs.sh -n [version] -k [identityName] ==> This will initiate chaincode on reliance-network with given identity.
+- composer-playground - if you want you use playgroung --or -- My faviroute approach
+- composer-rest-server
+- cd rnet-ui
+    - npm start   
+
+## To upgrade to new .bna version
+    - ./composerPrs.sh -d [version] ==> This will create new relinance-network@[version].bna and install them in reliance-network
+    - ./composerPrs.sh -u [version] -k [identityName] ==> This will initiate updated chaincode on reliance-network with given identity.
