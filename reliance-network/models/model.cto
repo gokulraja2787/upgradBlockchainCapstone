@@ -118,7 +118,7 @@ event ShipmentInPort {
 /**
  * Transaction Specification for temperature reading
  */
-transaction TemperatureReading {
+transaction TemperatureReading extends ShipmentTransaction {
   o Double celcius
   o String latitude
   o String longitude
@@ -128,7 +128,7 @@ transaction TemperatureReading {
 /**
  * Transaction Specification for accleration reading
  */
-transaction AccelerationReading {
+transaction AccelerationReading extends ShipmentTransaction {
   o Double accelerationX
   o Double accelerationY
   o Double accelerationZ
@@ -140,7 +140,7 @@ transaction AccelerationReading {
 /**
  * Transaction Specification for GPS reading
  */
-transaction GPSReading {
+transaction GPSReading extends ShipmentTransaction {
   o String latitude
   o String longitude
   o CompassDirection latitudeDirection
@@ -152,6 +152,6 @@ transaction GPSReading {
 /**
  * Transaction Specification for GPS reading
  */
- transaction ShipmentReceived {
-   --> Shipment shipment
+ transaction ShipmentReceived extends ShipmentTransaction  {
+   
  }
