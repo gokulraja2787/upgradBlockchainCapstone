@@ -6,7 +6,7 @@ Hyperledger Fabric blockchain system for reliance-network.com
 
 ## Assumptions
 - Acceleration Threshold:
-    - 10.4 > tx.accelerationX && 10.2 > tx.accelerationY && 10 > tx.accelerationZ
+    - emit if sum of accelration x,y,z is > accelrationThreshold .
 
 ## Fabric Setup
 - 5 Organizations:

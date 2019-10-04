@@ -30,9 +30,9 @@ async function AccelerationReading(tx) {
     let contract = contractRegistry.get(shippment.contract.getIdentifier());
     /**
      * Acceleration Threshold
-     * emit if accelratex < 10.4 and accelratey < 10.2 and accelratez < 10
+     * emit if sum of accelration x,y,z is > accelrationThreshold .
      */
-    if (10.4 > tx.accelerationX && 10.2 > tx.accelerationY && 10 > tx.accelerationZ) {
+    if (contract.maximumAcceleration < tx.accelerationX + tx.accelerationY + tx.accelerationZ) {
         let accelerationThresholdEvent = getAccelerationThreshold();
         accelerationThresholdEvent.accelerationX = tx.accelerationX;
         accelerationThresholdEvent.accelerationY = tx.accelerationY;
@@ -40,7 +40,7 @@ async function AccelerationReading(tx) {
         accelerationThresholdEvent.latitude = tx.latitude;
         accelerationThresholdEvent.longitude = tx.longitude;
         accelerationThresholdEvent.readingTime = tx.readingTime;
-        accelerationThresholdEvent.message = "Acceleration is out of range";
+        accelerationThresholdEvent.message = "Acceleration reading reached threshold";
         emit(accelerationThresholdEvent);
     }
     shippment.accelerationReading.push(tx);
