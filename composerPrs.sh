@@ -29,7 +29,7 @@ function checkPrerequisite {
 # Prints usage
 function usage() {
     echo "Usage: "
-    echo "./checkPrerequisite.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k] [-u -k]"
+    echo "./composerPrs.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k] [-u -k] [-R]"
     echo "-h print this usage"
     echo "-c Create PeerAdmin card"
     echo "-d [VERSION] Create and Deploy Business network"
@@ -38,6 +38,7 @@ function usage() {
     echo "-u [VERSION] upgrade network with given version with -k [Identity name] identity name to use"
     echo "-l list peer admin cards"
     echo "-r [CARDNAME] remove peer admin cards"
+    echo "-R [identity name] Runs \`composer-rest-server -c [identity name]@reliance-network -n never -u true -d rnet-log -w true\'"
 }
 
 CARD_NAME="PeerAdmin@reliance-network"
@@ -132,7 +133,7 @@ DO_NETWORK_UPGRADE=0
 VERSION=""
 IDENTITY=""
 
-while getopts "h?cd:i:n:lr:k:u:" o; do
+while getopts "h?cd:i:n:lr:k:u:R:" o; do
     case "$o" in
     h | /?)
         usage
@@ -166,6 +167,9 @@ while getopts "h?cd:i:n:lr:k:u:" o; do
         exit 0;;
     r)
         deleteCard $OPTARG
+        exit 0;;
+    R)
+        composer-rest-server -c $OPTARG@reliance-network -n never -u true -d rnet-log -w true
         exit 0;;
     *)
         usage

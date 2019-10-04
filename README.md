@@ -36,7 +36,7 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
 
 # How to setup composer and run code
     "Usage: "
-    "./checkPrerequisite.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k] [-u -k]"
+    "./composerPrs.sh [-h] [-c] [-d] [-i] [-l] [-r] [-n -k] [-u -k] [-R]"
     "-h print this usage"
     "-c Create PeerAdmin card"
     "-d [VERSION] Create and Deploy Business network"
@@ -45,6 +45,7 @@ Docker compose file is docker-compose-cli.yaml will not committed. It is templat
     "-u [VERSION] upgrade network with given version with -k [Identity name] identity name to use"
     "-l list peer admin cards"
     "-r [CARDNAME] remove peer admin cards"
+    "-R [identity name] Runs \`composer-rest-server -c [identity name]@reliance-network -n never -u true -d rnet-log -w true\'"
 
 # How to do continuous development and deploy.
 - Clone the source code
