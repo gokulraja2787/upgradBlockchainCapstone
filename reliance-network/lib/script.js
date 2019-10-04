@@ -19,6 +19,7 @@
  */
 
 /**
+ * Acceration reading transaction
  * 
  * @param {com.reliance.network.AccelerationReading} tx 
  * @transaction
@@ -41,9 +42,47 @@ async function AccelerationReading(tx) {
         accelerationThresholdEvent.longitude = tx.longitude;
         accelerationThresholdEvent.readingTime = tx.readingTime;
         accelerationThresholdEvent.message = "Acceleration reading reached threshold";
+        accelerationThresholdEvent.shipment = shippment;
         emit(accelerationThresholdEvent);
     }
     shippment.accelerationReading.push(tx);
+    await shipmentRegistry.update(shippment);
+}
+
+/**
+ * 
+ * Temperature Reading transaction
+ * 
+ * @param {com.reliance.network.TemperatureReading} tx
+ * @transaction 
+ */
+async function TemperatureReading(tx) {
+    const contractRegistry = await getContractRegistry();
+    const shipmentRegistry = await getShippmentRegistry();
+    let shippment = tx.shipment;
+    let contract = contractRegistry.get(shippment.contract.getIdentifier());
+
+    let celcius = tx.celcius;
+    let latitude = tx.latitude;
+    let longitude = tx.longitude;
+    let readingTime = tx.readingTime;
+
+    /**
+     * check if celcius is within the contract's minimum and maximum temperature limit.
+     * if not emit TemperatureThreshold event
+     */
+    if (celcius < contract.minimumTemperature || celcius > contract.maximumTemperature) {
+        let event = getTemperatureThreshold();
+        event.temperature = celcius;
+        event.latitude = latitude;
+        event.longitude = longitude;
+        event.readingTime = readingTime;
+        event.message = "Temperature reading reached threshold"
+        event.shipment = shippment;
+        emit(event);
+    }
+
+    shippment.temperatureReading.push(tx);
     await shipmentRegistry.update(shippment);
 }
 
@@ -98,6 +137,15 @@ async function getImporterRegistry() {
  */
 async function getAccelerationThreshold() {
     let event = getFactory().newEvent('com.reliance.network', 'AccelerationThreshold');
+    return event;
+}
+
+/**
+ * getTemperatureThreshold event
+ * @returns {Event} TemperatureThreshold
+ */
+async function getTemperatureThreshold() {
+    let event = getFactory().newEvent('com.reliance.network', 'TemperatureThreshold');
     return event;
 }
 
