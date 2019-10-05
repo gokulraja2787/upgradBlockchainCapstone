@@ -62,6 +62,7 @@ async function AccelerationReading(tx) {
  * @transaction 
  */
 async function TemperatureReading(tx) {
+
     const contractRegistry = await getContractRegistry();
     const shipmentRegistry = await getShippmentRegistry();
     let shippment = tx.shipment;
@@ -91,6 +92,29 @@ async function TemperatureReading(tx) {
 
     shippment.temperatureReading.push(tx);
     await shipmentRegistry.update(shippment);
+}
+
+/**
+ * 
+ * @param {com.reliance.network.GPSReading} tx
+ * @transaction 
+ */
+async function GPSReading(tx) {
+    let latitude = tx.latitude;
+    let longitude = tx.longitude;
+    let latitudeDirection = tx.latitudeDirection;
+    let longitudeDirection = tx.longitudeDirection;
+    let readingTime = tx.readingTime;
+    let readingDate = tx.readingDate;
+
+    const contractRegistry = await getContractRegistry();
+    const shipmentRegistry = await getShippmentRegistry();
+    let shippment = tx.shipment;
+    let contract = await contractRegistry.get(shippment.contract.getIdentifier());
+
+    shippment.gpsReading.push(tx);
+    await shipmentRegistry.update(shippment);
+
 }
 
 /**
@@ -153,6 +177,15 @@ function getAccelerationThreshold() {
  */
 function getTemperatureThreshold() {
     let event = getFactory().newEvent('com.reliance.network', 'TemperatureThreshold');
+    return event;
+}
+
+/**
+ * getShipmentInPort event
+ * @returns {Event} ShipmentInPort
+ */
+function getShipmentInPort() {
+    let event = getFactory().newEvent('com.reliance.network', 'ShipmentInPort');
     return event;
 }
 
