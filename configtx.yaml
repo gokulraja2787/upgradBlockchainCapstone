@@ -144,12 +144,14 @@ Orderer: &OrdererDefaults
 
   OrdererType: solo
   Addresses:
-    - orderer.reliance-network.com:7050
-  BatchTimeout: 2s
+    - orderer.reliance-network.com:7050 #The ordering service is required to run over port 7050.
+  #The Kafka service is required to run over port 9092
+  BatchTimeout: 5s
   BatchSize:
     MaxMessageCount: 10
-    AbsoluteMaxBytes: 99 MB
+    AbsoluteMaxBytes: 256 MB
     PreferredMaxBytes: 512 KB
+  #The Kafka service is required to run over port 9092 and configured to be on same localhost as the ordering service.
   Kafka:
     Brokers: 
       #Listen kafka in port 9092
