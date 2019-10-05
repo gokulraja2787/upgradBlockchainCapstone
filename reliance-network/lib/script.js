@@ -28,11 +28,12 @@ async function AccelerationReading(tx) {
     const contractRegistry = await getContractRegistry();
     const shipmentRegistry = await getShippmentRegistry();
     let shippment = tx.shipment;
-    let contract = contractRegistry.get(shippment.contract.getIdentifier());
+    let contract = await contractRegistry.get(shippment.contract.getIdentifier());
     /**
      * Acceleration Threshold
      * emit if sum of accelration x,y,z is > accelrationThreshold .
      */
+    printDebug(`${tx.accelerationX + tx.accelerationY + tx.accelerationZ} < ${contract.maximumAcceleration}`)
     if (contract.maximumAcceleration < tx.accelerationX + tx.accelerationY + tx.accelerationZ) {
         let accelerationThresholdEvent = getAccelerationThreshold();
         accelerationThresholdEvent.accelerationX = tx.accelerationX;
@@ -40,7 +41,11 @@ async function AccelerationReading(tx) {
         accelerationThresholdEvent.accelerationZ = tx.accelerationZ;
         accelerationThresholdEvent.latitude = tx.latitude;
         accelerationThresholdEvent.longitude = tx.longitude;
-        accelerationThresholdEvent.readingTime = tx.readingTime;
+        if (tx.readingTime) {
+            accelerationThresholdEvent.readingTime = tx.readingTime;
+        } else {
+            accelerationThresholdEvent.readingTime = "No Input"
+        }
         accelerationThresholdEvent.message = "Acceleration reading reached threshold";
         accelerationThresholdEvent.shipment = shippment;
         emit(accelerationThresholdEvent);
@@ -60,7 +65,7 @@ async function TemperatureReading(tx) {
     const contractRegistry = await getContractRegistry();
     const shipmentRegistry = await getShippmentRegistry();
     let shippment = tx.shipment;
-    let contract = contractRegistry.get(shippment.contract.getIdentifier());
+    let contract = await contractRegistry.get(shippment.contract.getIdentifier());
 
     let celcius = tx.celcius;
     let latitude = tx.latitude;
@@ -71,6 +76,7 @@ async function TemperatureReading(tx) {
      * check if celcius is within the contract's minimum and maximum temperature limit.
      * if not emit TemperatureThreshold event
      */
+    printDebug(`Comparing ${celcius} with ${contract.minimumTemperature} & ${contract.maximumTemperature}`)
     if (celcius < contract.minimumTemperature || celcius > contract.maximumTemperature) {
         let event = getTemperatureThreshold();
         event.temperature = celcius;
@@ -80,6 +86,7 @@ async function TemperatureReading(tx) {
         event.message = "Temperature reading reached threshold"
         event.shipment = shippment;
         emit(event);
+        printDebug(`Event emitted`);
     }
 
     shippment.temperatureReading.push(tx);
@@ -135,7 +142,7 @@ async function getImporterRegistry() {
  * getAccelerationThreshold event
  * @returns {Event} AccelerationThreshold
  */
-async function getAccelerationThreshold() {
+function getAccelerationThreshold() {
     let event = getFactory().newEvent('com.reliance.network', 'AccelerationThreshold');
     return event;
 }
@@ -144,9 +151,13 @@ async function getAccelerationThreshold() {
  * getTemperatureThreshold event
  * @returns {Event} TemperatureThreshold
  */
-async function getTemperatureThreshold() {
+function getTemperatureThreshold() {
     let event = getFactory().newEvent('com.reliance.network', 'TemperatureThreshold');
     return event;
+}
+
+function printDebug(message) {
+    console.log(`@rnet-debug ${message}`)
 }
 
 /**
