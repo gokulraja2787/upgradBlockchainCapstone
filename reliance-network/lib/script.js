@@ -104,13 +104,27 @@ async function GPSReading(tx) {
     let longitude = tx.longitude;
     let latitudeDirection = tx.latitudeDirection;
     let longitudeDirection = tx.longitudeDirection;
-    let readingTime = tx.readingTime;
-    let readingDate = tx.readingDate;
 
     const contractRegistry = await getContractRegistry();
     const shipmentRegistry = await getShippmentRegistry();
+    const importerRegistry = await getImporterRegistry();
+
     let shippment = tx.shipment;
     let contract = await contractRegistry.get(shippment.contract.getIdentifier());
+    let importer = await importerRegistry.get(contract.importer.getIdentifier());
+
+    let computedAddress = latitude+longitude+latitudeDirection+longitudeDirection;
+    /**
+     * If importer address is equal to GPS Reading
+     * then invoke 'Shipment in a port' event
+     */
+    printDebug(`Check ${importer.address} is same as ${computedAddress}`);
+    if (importer.address === computedAddress)  {
+        let event = getShipmentInPort();
+        event.message = `Your shipment is in port ${importer.address}`;
+        event.shipment = shippment;
+        emit(event);
+    }
 
     shippment.gpsReading.push(tx);
     await shipmentRegistry.update(shippment);
@@ -137,28 +151,28 @@ async function getShippmentRegistry()  {
 
 /**
  * Get shipper registry
- * @returns {ParicipantRegistry} shipperRegistry
+ * @returns {ParticipantRegistry} shipperRegistry
  */
 async function getShipperRegistry() {
-    const shipperRegistry = await getAssetRegistry('com.reliance.network.Shipper');
+    const shipperRegistry = await getParticipantRegistry('com.reliance.network.Shipper');
     return shipperRegistry;
 }
 
 /**
  * Get exporter registry
- * @returns {ParicipantRegistry} exporterRegistry
+ * @returns {ParticipantRegistry} exporterRegistry
  */
 async function getExporterRegistry() {
-    const paricipantRegistry = await getAssetRegistry('com.reliance.network.Exporter');
-    return paricipantRegistry;
+    const ParticipantRegistry = await getParticipantRegistry('com.reliance.network.Exporter');
+    return ParticipantRegistry;
 }
 
 /**
  * Get importer registry
- * @returns {ParicipantRegistry} importerRegistry
+ * @returns {ParticipantRegistry} importerRegistry
  */
 async function getImporterRegistry() {
-    const importerRegistry = await getAssetRegistry('com.reliance.network.Importer');
+    const importerRegistry = await getParticipantRegistry('com.reliance.network.Importer');
     return importerRegistry;
 }
 
