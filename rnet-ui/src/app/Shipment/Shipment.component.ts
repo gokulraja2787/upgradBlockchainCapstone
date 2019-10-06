@@ -34,7 +34,7 @@ export class ShipmentComponent implements OnInit {
 
   shipmentId = new FormControl('', Validators.required);
   AssetType = new FormControl('', Validators.required);
-  ShipmentStatus = new FormControl('', Validators.required);
+  shipmentStatus = new FormControl('', Validators.required);
   unitCount = new FormControl('', Validators.required);
   contract = new FormControl('', Validators.required);
   temperatureReading = new FormControl('', Validators.required);
@@ -45,7 +45,7 @@ export class ShipmentComponent implements OnInit {
     this.myForm = fb.group({
       shipmentId: this.shipmentId,
       AssetType: this.AssetType,
-      ShipmentStatus: this.ShipmentStatus,
+      shipmentStatus: this.shipmentStatus,
       unitCount: this.unitCount,
       contract: this.contract,
       temperatureReading: this.temperatureReading,
@@ -110,7 +110,7 @@ export class ShipmentComponent implements OnInit {
       $class: 'com.reliance.network.Shipment',
       'shipmentId': this.shipmentId.value,
       'AssetType': this.AssetType.value,
-      'ShipmentStatus': this.ShipmentStatus.value,
+      'shipmentStatus': this.shipmentStatus.value,
       'unitCount': this.unitCount.value,
       'contract': this.contract.value,
       'temperatureReading': this.temperatureReading.value,
@@ -121,7 +121,7 @@ export class ShipmentComponent implements OnInit {
     this.myForm.setValue({
       'shipmentId': null,
       'AssetType': null,
-      'ShipmentStatus': null,
+      'shipmentStatus': null,
       'unitCount': null,
       'contract': null,
       'temperatureReading': null,
@@ -136,7 +136,7 @@ export class ShipmentComponent implements OnInit {
       this.myForm.setValue({
         'shipmentId': null,
         'AssetType': null,
-        'ShipmentStatus': null,
+        'shipmentStatus': null,
         'unitCount': null,
         'contract': null,
         'temperatureReading': null,
@@ -159,7 +159,7 @@ export class ShipmentComponent implements OnInit {
     this.asset = {
       $class: 'com.reliance.network.Shipment',
       'AssetType': this.AssetType.value,
-      'ShipmentStatus': this.ShipmentStatus.value,
+      'shipmentStatus': this.shipmentStatus.value,
       'unitCount': this.unitCount.value,
       'contract': this.contract.value,
       'temperatureReading': this.temperatureReading.value,
@@ -217,7 +217,7 @@ export class ShipmentComponent implements OnInit {
       const formObject = {
         'shipmentId': null,
         'AssetType': null,
-        'ShipmentStatus': null,
+        'shipmentStatus': null,
         'unitCount': null,
         'contract': null,
         'temperatureReading': null,
@@ -237,10 +237,10 @@ export class ShipmentComponent implements OnInit {
         formObject.AssetType = null;
       }
 
-      if (result.ShipmentStatus) {
-        formObject.ShipmentStatus = result.ShipmentStatus;
+      if (result.shipmentStatus) {
+        formObject.shipmentStatus = result.shipmentStatus;
       } else {
-        formObject.ShipmentStatus = null;
+        formObject.shipmentStatus = null;
       }
 
       if (result.unitCount) {
@@ -291,7 +291,7 @@ export class ShipmentComponent implements OnInit {
     this.myForm.setValue({
       'shipmentId': null,
       'AssetType': null,
-      'ShipmentStatus': null,
+      'shipmentStatus': null,
       'unitCount': null,
       'contract': null,
       'temperatureReading': null,

@@ -25,7 +25,7 @@ import {AssetType,ShipmentStatus,CompassDirection} from './com.reliance.network.
    export class Shipment extends Asset {
       shipmentId: string;
       AssetType: AssetType;
-      ShipmentStatus: ShipmentStatus;
+      shipmentStatus: ShipmentStatus;
       unitCount: number;
       contract: Contract;
       temperatureReading: TemperatureReading[];
