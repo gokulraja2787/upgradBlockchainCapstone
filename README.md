@@ -5,8 +5,11 @@ Repository to hold my capstone project of Upgrad course on blockchain
 Hyperledger Fabric blockchain system for reliance-network.com
 
 ## Assumptions
-- Acceleration Threshold:
+- Acceleration Threshold Event:
     - emit if sum of accelration x,y,z is > accelrationThreshold .
+- Shipment In Port Event:
+    - Address of importer must be LATITUDE + LONGTITUDE + LAT Direction + LONG Direction is adpated from here: https://learn.upgrad.com/v/course/360/question/156354
+
 
 ## Fabric Setup
 - 5 Organizations:
