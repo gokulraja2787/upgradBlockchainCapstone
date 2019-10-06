@@ -9,7 +9,11 @@ Hyperledger Fabric blockchain system for reliance-network.com
     - emit if sum of accelration x,y,z is > accelrationThreshold .
 - Shipment In Port Event:
     - Address of importer must be LATITUDE + LONGTITUDE + LAT Direction + LONG Direction is adpated from here: https://learn.upgrad.com/v/course/360/question/156354
-
+- Shipment Recevied transaction:
+    - Computation of penality adapted by:
+        - Increase penality counter for every violation
+        - For acceleration reading: For each acceleration readings, the sum of accelration x,y,z of the reading is > accelrationThreshold.
+        - For temperature reading: For each temperature readings, the celcius is < minmum threshold or celcius is > maximum threshold.
 
 ## Fabric Setup
 - 5 Organizations:

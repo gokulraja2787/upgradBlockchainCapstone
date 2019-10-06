@@ -95,6 +95,7 @@ async function TemperatureReading(tx) {
 }
 
 /**
+ * Performs GPS reading
  * 
  * @param {com.reliance.network.GPSReading} tx
  * @transaction 
@@ -117,6 +118,7 @@ async function GPSReading(tx) {
     /**
      * If importer address is equal to GPS Reading
      * then invoke 'Shipment in a port' event
+     * Logic to compare is specified here: https://learn.upgrad.com/v/course/360/question/156354
      */
     printDebug(`Check ${importer.address} is same as ${computedAddress}`);
     if (importer.address === computedAddress)  {
@@ -128,6 +130,104 @@ async function GPSReading(tx) {
 
     shippment.gpsReading.push(tx);
     await shipmentRegistry.update(shippment);
+
+}
+
+/**
+ * 
+ * Shipment Recevied transaction
+ * 
+ * @param {com.reliance.network.ShipmentReceived} tx
+ * @transaction 
+ */
+async function ShipmentReceived(tx) {
+    const contractRegistry = await getContractRegistry();
+    const shipmentRegistry = await getShippmentRegistry();
+    const importerRegistry = await getImporterRegistry();
+    const exporterRegistry = await getExporterRegistry();
+    const shipperRegistry = await getShipperRegistry();
+
+    let shippment = tx.shipment;
+    let contract = await contractRegistry.get(shippment.contract.getIdentifier());
+
+    // Calculate totalPayout = unitPrice * unitPrice
+    let totalPayout = shippment.unitCount * contract.unitPrice;
+    shippment.shipmentStatus = 'Arrived';
+
+    // Update shipment in shipment registry
+    await shipmentRegistry.update(shippment);
+
+    // If delivered date > delivery date then totalPayout = 0
+    let currentDate = new Date();
+    let contractArrivalDateTime = new Date(contract.arrivalDateTime);
+    printDebug(`Compare ${currentDate} > ${contractArrivalDateTime}`);
+    if (currentDate > contractArrivalDateTime) {
+        printDebug('Late delivery: Making payout as 0.')
+        totalPayout = 0;
+    }
+    printDebug(`Total payout before penality is ${totalPayout}`);
+
+    /**
+     * Compute penality
+     * 
+     * Increase penality for every violation
+     * Maximumacceleration must be lessr than accleration x+y+z
+     * 
+     * temperature must of between minimum and maximum allowed.
+     * 
+     * Implemented as specified in https://learn.upgrad.com/v/course/360/question/156357
+     */
+    let totalPenality = 0; // This penality Counter
+    let totalDeduction = 0;
+    shippment.accelerationReading.forEach(reading => {
+        let totalSpeed = reading.accelerationX + reading.accelerationY + reading.accelerationZ;
+        if (totalSpeed > contract.maximumAcceleration) {
+            totalPenality++;
+        }
+    });
+    printDebug(`Total penality due to overspeeding ${totalPenality} for accleration`);
+    totalDeduction = totalPenality * contract.maximumPenaltyFactor;
+
+    let totalMinPenality = 0, totalMaxPenality = 0;
+    shippment.temperatureReading.forEach(reading => {
+        if (reading.celcius < contract.minimumTemperature){
+            totalMinPenality++;
+        } 
+        if(reading.celcius > contract.maximumTemperature) {
+            totalMaxPenality++;
+        }
+    });
+    printDebug(`Total penality due to low temp maintenance ${totalMinPenality}`);
+    printDebug(`Total penality due to high temp maintenance ${totalMaxPenality}`);
+
+    totalDeduction += (totalMinPenality * contract.minimumPenaltyFactor);
+    totalDeduction += (totalMaxPenality * contract.maximumPenaltyFactor);
+
+    //Final totalDeduction is multiplied by number of unit
+    totalDeduction *= shippment.unitCount;
+
+    printDebug(`Total deduction is ${totalDeduction}`);
+    //The below line is to avoid negative payout
+    //Subtract totalPayout after computing penality
+    (totalPayout > totalDeduction) ? totalPayout -= totalDeduction : totalPayout = 0;
+    printDebug(`Total payout is ${totalPayout}`);
+
+    /**
+     * Update balance
+     */
+    let importer = await importerRegistry.get(contract.importer.getIdentifier());
+    let exporter = await exporterRegistry.get(contract.exporter.getIdentifier());
+    let shipper = await exporterRegistry.get(contract.shipper.getIdentifier());
+
+    // TODO balance check before deduction on importer account must be done
+    importer.accountBalance -= totalPayout;
+    exporter.accountBalance += (totalPayout / 2);
+    shipper.accountBalance += (totalPayout / 2);
+
+    // Update exporter, importer, and shipper
+    await importerRegistry.update(importer);
+    await exporterRegistry.update(exporter);
+    await shipperRegistry.update(shipper);
 
 }
 
