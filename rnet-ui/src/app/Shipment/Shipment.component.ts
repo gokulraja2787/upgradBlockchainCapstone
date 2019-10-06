@@ -33,7 +33,7 @@ export class ShipmentComponent implements OnInit {
   private errorMessage;
 
   shipmentId = new FormControl('', Validators.required);
-  AssetType = new FormControl('', Validators.required);
+  assetType = new FormControl('', Validators.required);
   shipmentStatus = new FormControl('', Validators.required);
   unitCount = new FormControl('', Validators.required);
   contract = new FormControl('', Validators.required);
@@ -44,7 +44,7 @@ export class ShipmentComponent implements OnInit {
   constructor(public serviceShipment: ShipmentService, fb: FormBuilder) {
     this.myForm = fb.group({
       shipmentId: this.shipmentId,
-      AssetType: this.AssetType,
+      assetType: this.assetType,
       shipmentStatus: this.shipmentStatus,
       unitCount: this.unitCount,
       contract: this.contract,
@@ -109,7 +109,7 @@ export class ShipmentComponent implements OnInit {
     this.asset = {
       $class: 'com.reliance.network.Shipment',
       'shipmentId': this.shipmentId.value,
-      'AssetType': this.AssetType.value,
+      'assetType': this.assetType.value,
       'shipmentStatus': this.shipmentStatus.value,
       'unitCount': this.unitCount.value,
       'contract': this.contract.value,
@@ -120,7 +120,7 @@ export class ShipmentComponent implements OnInit {
 
     this.myForm.setValue({
       'shipmentId': null,
-      'AssetType': null,
+      'assetType': null,
       'shipmentStatus': null,
       'unitCount': null,
       'contract': null,
@@ -135,7 +135,7 @@ export class ShipmentComponent implements OnInit {
       this.errorMessage = null;
       this.myForm.setValue({
         'shipmentId': null,
-        'AssetType': null,
+        'assetType': null,
         'shipmentStatus': null,
         'unitCount': null,
         'contract': null,
@@ -158,7 +158,7 @@ export class ShipmentComponent implements OnInit {
   updateAsset(form: any): Promise<any> {
     this.asset = {
       $class: 'com.reliance.network.Shipment',
-      'AssetType': this.AssetType.value,
+      'assetType': this.assetType.value,
       'shipmentStatus': this.shipmentStatus.value,
       'unitCount': this.unitCount.value,
       'contract': this.contract.value,
@@ -216,7 +216,7 @@ export class ShipmentComponent implements OnInit {
       this.errorMessage = null;
       const formObject = {
         'shipmentId': null,
-        'AssetType': null,
+        'assetType': null,
         'shipmentStatus': null,
         'unitCount': null,
         'contract': null,
@@ -231,10 +231,10 @@ export class ShipmentComponent implements OnInit {
         formObject.shipmentId = null;
       }
 
-      if (result.AssetType) {
-        formObject.AssetType = result.AssetType;
+      if (result.assetType) {
+        formObject.assetType = result.assetType;
       } else {
-        formObject.AssetType = null;
+        formObject.assetType = null;
       }
 
       if (result.shipmentStatus) {
@@ -290,7 +290,7 @@ export class ShipmentComponent implements OnInit {
   resetForm(): void {
     this.myForm.setValue({
       'shipmentId': null,
-      'AssetType': null,
+      'assetType': null,
       'shipmentStatus': null,
       'unitCount': null,
       'contract': null,

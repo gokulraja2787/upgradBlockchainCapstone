@@ -54,7 +54,7 @@ participant Importer identified by importerId {
  */
 asset Shipment identified by shipmentId {
   o String shipmentId
-  o AssetType AssetType
+  o AssetType assetType
   o ShipmentStatus shipmentStatus
   o Long unitCount
   --> Contract contract
